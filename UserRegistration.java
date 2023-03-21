@@ -4,21 +4,22 @@ import java.util.regex.Pattern;
 
 public class UserRegistration {
     public static void main(String[] args) {
-        UserRegistration emailId = new UserRegistration();
-        emailId.validEmailId();
+        UserRegistration phoneNumber = new UserRegistration();
+        phoneNumber.validPhoneNumber();
     }
 
-    public void validEmailId() {
+    public void validPhoneNumber() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter a valid EmailId");
-        String email = sc.next();
-        String emailRegex = "^[a-zA-Z]+[a-zA-Z0-9]*[- . + _]?[a-zA-Z0-9]+[@]{1}[a-z0-9]+[.]{1}[a-z]+[.]?[a-z]+$";
-        Pattern patternObject = Pattern.compile(emailRegex);
-        Matcher matcherObject = patternObject.matcher(email);
-        boolean emailId = matcherObject.matches();
-        if (emailId) {
-            System.out.println("EmailId : "+email);
+        System.out.println("Enter valid PhoneNumber");
+        System.out.println("Mobile Format - Country code follow by space and 10 digit number");
+        String phoneNumber = sc.nextLine();
+        String mobileNumber = "^[+][0-9]{2}\\s[0-9]{10}$";
+        Pattern patternObject = Pattern.compile(mobileNumber);
+        Matcher matcherObject = patternObject.matcher(phoneNumber);
+        boolean number = matcherObject.matches();
+        if (number) {
+            System.out.println("PhoneNumber : "+phoneNumber);
         } else
-            System.err.println("Invalid email id");
+            System.err.println(phoneNumber + " is an Invalid phoneNumber");
     }
 }
