@@ -4,22 +4,21 @@ import java.util.regex.Pattern;
 
 public class UserRegistration {
     public static void main(String[] args) {
-        UserRegistration lastName = new UserRegistration();
-        lastName.validLastName();
+        UserRegistration emailId = new UserRegistration();
+        emailId.validEmailId();
     }
 
-    public void validLastName() {
+    public void validEmailId() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter a valid last name");
-        System.out.println("Last name starts with Capital and has minimum 3 characters");
-        String lastName = sc.next();
-        String lastNameRegex = "^[A-Z][a-z]{3,}";
-        Pattern patternObject = Pattern.compile(lastNameRegex);
-        Matcher matcherObject = patternObject.matcher(lastName);
-        boolean name = matcherObject.matches();
-        if (name) {
-            System.out.println("LastName : " + lastName);
+        System.out.println("Enter a valid EmailId");
+        String email = sc.next();
+        String emailRegex = "^[a-zA-Z]+[a-zA-Z0-9]*[- . + _]?[a-zA-Z0-9]+[@]{1}[a-z0-9]+[.]{1}[a-z]+[.]?[a-z]+$";
+        Pattern patternObject = Pattern.compile(emailRegex);
+        Matcher matcherObject = patternObject.matcher(email);
+        boolean emailId = matcherObject.matches();
+        if (emailId) {
+            System.out.println("EmailId : "+email);
         } else
-            System.err.println(lastName + " is an Invalid last Name");
+            System.err.println("Invalid email id");
     }
 }
