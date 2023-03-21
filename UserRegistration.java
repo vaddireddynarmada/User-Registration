@@ -11,14 +11,14 @@ public class UserRegistration {
     public void validPassword() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter valid password");
-        System.out.println("Enter above 8 Characters and Should have at least 1 Upper Case");
+        System.out.println("Enter above 7 Characters and Should have at least 1 Upper Case and number");
         String password = sc.next();
-        String passwordRegex = "(?=.*[A-Z])(?=.*[a-b]).{8,}";
+        String passwordRegex = "(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{8,}";
         Pattern patternObject = Pattern.compile(passwordRegex);
         Matcher matcherObject = patternObject.matcher(password);
         boolean validPassword = matcherObject.matches();
         if (validPassword) {
-            System.out.println("Password : " + password);
+            System.out.println("Password : "+password);
         } else
             System.err.println("Invalid password");
     }
