@@ -1,118 +1,46 @@
+
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
+import java.util.Arrays;
+import java.util.Collection;
 
 public class UserRegistrationTest {
-    @Test
-    public void givenFirstName_WhenProper_ShouldReturnTrue() {
-        UserRegistration userValidator = new UserRegistration();
-        boolean isValid = userValidator.validName("Nar");
-        Assert.assertTrue(isValid);
-    }
+    @RunWith(Parameterized.class)
+    public class UserRegistrationParameterizedTest {
+        public String testEmail;
+        public boolean expectedResult;
+        public UserRegistration userValidator;
 
-    @Test
-    public void givenFirstName_WhenFirstLetterIsSmall_ShouldReturnFalse() {
-        UserRegistration userValidator = new UserRegistration();
-        boolean isNotValid = userValidator.validName("nar");
-        Assert.assertFalse(isNotValid);
-    }
+        public UserRegistrationParameterizedTest(String testEmail, boolean expectedResult) {
+            this.testEmail = testEmail;
+            this.expectedResult = expectedResult;
+        }
 
-    @Test
-    public void givenFirstName_WhenLesserThanThreeCharacters_ShouldReturnFalse() {
-        UserRegistration userValidator = new UserRegistration();
-        boolean isNotValid = userValidator.validName("Ab");
-        Assert.assertFalse(isNotValid);
-    }
+        @Before
+        public void initialize() {
+            userValidator = new UserRegistration();
+        }
 
-    @Test
-    public void givenLastName_WhenProper_ShouldReturnTrue() {
-        UserRegistration userValidator = new UserRegistration();
-        boolean isValid = userValidator.validName("Narmada");
-        Assert.assertTrue(isValid);
-    }
+        @Test
+        public void givenEmailAddress_ShouldReturnAsExpected() {
+            boolean testResult = userValidator.validEmail(testEmail);
+            Assert.assertEquals(testResult, expectedResult);
+        }
 
-    @Test
-    public void givenLastName_WhenFirstLetterIsSmall_ShouldReturnFalse() {
-        UserRegistration userValidator = new UserRegistration();
-        boolean isNotValid = userValidator.validName("xyz");
-        Assert.assertFalse(isNotValid);
-    }
-
-    @Test
-    public void givenLastName_WhenLesserThanThreeCharacters_ShouldReturnFalse() {
-        UserRegistration userValidator = new UserRegistration();
-        boolean isNotValid = userValidator.validName("Ch");
-        Assert.assertFalse(isNotValid);
-    }
-
-    @Test
-    public void givenEmailAddress_WhenProper_ShouldReturnTrue() {
-        UserRegistration userValidator = new UserRegistration();
-        boolean isValid = userValidator.validEmail("narmada.vaddireddy97@gmail.com");
-        Assert.assertTrue(isValid);
-    }
-
-    @Test
-    public void givenEmailAddress_WhenNotProper_ShouldReturnFalse() {
-
-        UserRegistration userValidator = new UserRegistration();
-        boolean isNotValid = userValidator.validEmail("abc()*@gmail.com");
-        Assert.assertFalse(isNotValid);
-
-    }
-
-    @Test
-    public void givenMobileNumber_WhenProper_ShouldReturnTrue() {
-        UserRegistration userValidator = new UserRegistration();
-        boolean isValid = userValidator.validMobileNumber("91 9367938587");
-        Assert.assertTrue(isValid);
-    }
-
-    @Test
-    public void givenMobileNumber_WhenNoSpace_ShouldReturnFalse() {
-        UserRegistration userValidator = new UserRegistration();
-        boolean isNotValid = userValidator.validMobileNumber("919367938587");
-        Assert.assertFalse(isNotValid);
-    }
-
-    @Test
-    public void givenMobileNumber_WhenNumberLessThanTenDigits_ShouldReturnFalse() {
-        UserRegistration userValidator = new UserRegistration();
-        boolean isNotValid = userValidator.validMobileNumber("91 5736453");
-        Assert.assertFalse(isNotValid);
-    }
-
-    @Test
-    public void givenPassword_WhenProper_ShouldReturnTrue() {
-        UserRegistration userValidator = new UserRegistration();
-        boolean isValid = userValidator.validPassword("xyz@");
-        Assert.assertTrue(isValid);
-    }
-
-    @Test
-    public void givenPassword_WhenLessThanEightCharacters_ShouldReturnFalse() {
-        UserRegistration userValidator = new UserRegistration();
-        boolean isNotValid = userValidator.validPassword("sd@A12");
-        Assert.assertFalse(isNotValid);
-    }
-
-    @Test
-    public void givenPassword_WhenNoUpperCaseCharacter_ShouldReturnFalse() {
-        UserRegistration userValidator = new UserRegistration();
-        boolean isNotValid = userValidator.validPassword("asjd23$df");
-        Assert.assertFalse(isNotValid);
-    }
-
-    @Test
-    public void givenPassword_WhenNoNumericalNumber_ShouldReturnFalse() {
-        UserRegistration userValidator = new UserRegistration();
-        boolean isNotValid = userValidator.validPassword("asjdAG$df");
-        Assert.assertFalse(isNotValid);
-    }
-
-    @Test
-    public void givenPassword_WhenMoreThanOneSpecialCharacter_ShouldReturnFalse() {
-        UserRegistration userValidator = new UserRegistration();
-        boolean isNotValid = userValidator.validPassword("asjd23^$df");
-        Assert.assertFalse(isNotValid);
+        @Parameterized.Parameters
+        public static Collection input() {
+            return Arrays.asList(new Object[][]{{"abc@bridgelabz.co.in", true}, {"abc@gmail.com.com", true},
+                    {"abc@yahoo.com", true}, {"abc@1.com", true}, {"abc-100@yahoo.com", true},
+                    {"abc.100@yahoo.com", true}, {"abc111@abc.com", true}, {"abc-100@abc.net", true},
+                    {"abc.100@abc.com.au", true}, {"abc+100@gmail.com", true},
+                    {".abc@abc.com", false}, {"abc", false}, {"abc@.com.my", false}, {"abc@abc@gmail.com", false},
+                    {"abc()*@gmail.com", false}, {"abc..2002@gmail.com", false}, {"abc.@gmail.com", false},
+                    {"abc123@.com", false}, {"abc123@.com.com", false}, {"abc123@gmail.a", false},
+                    {"abc@%*.com", false}, {"abc@gmail.com.1a", false}, {".abc@gmail.com.aa.au", false}});
+        }
     }
 }
